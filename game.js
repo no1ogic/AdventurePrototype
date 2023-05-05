@@ -4,21 +4,38 @@ class Demo1 extends AdventureScene {
     }
 
     onEnter() {
-
-        let clip = this.add.text(this.w * 0.3, this.w * 0.3, "📎 paperclip")
-            .setFontSize(this.s * 2)
+        let detr = 0
+        let clip = this.add.text(this.w * 0.3, this.w * 0.3, "dĔšĸ")
+            .setFontSize(this.s * 5)
             .setInteractive()
-            .on('pointerover', () => this.showMessage("Metal, bent."))
+            .on('pointerover', () => this.showMessage("remember clippy? i do."))
             .on('pointerdown', () => {
                 this.showMessage("No touching!");
                 this.tweens.add({
                     targets: clip,
-                    x: '+=' + this.s,
-                    repeat: 2,
+                    y: '+=' + this.s,
+                    repeat: 0,
                     yoyo: true,
                     ease: 'Sine.inOut',
-                    duration: 100
+                    duration: 80
                 });
+                lockpick.setAlpha([1]);
+                detr += 1;
+            });
+        let lockpick = this.add.text(this.w*0.3, this.w*0.4,"lockpick")
+            .setFontSize(this.s*5)
+            .setAlpha([0])
+            .setInteractive()
+            .on('pointerover',() => {
+                console.log(lockpick._alpha);
+                if (lockpick._alpha == 0)
+                {
+                    this.showMessage("nothing");
+                }
+                else{
+                    this.showMessage("you found it.");
+                }
+
             });
 
         let key = this.add.text(this.w * 0.5, this.w * 0.1, "🔑 key")
@@ -96,9 +113,17 @@ class Intro extends Phaser.Scene {
     constructor() {
         super('intro')
     }
+    preload()
+    {
+        
+    }
     create() {
-        this.add.text(50,50, "Adventure awaits!").setFontSize(50);
-        this.add.text(50,100, "Click anywhere to begin.").setFontSize(20);
+        //this.add.text(50,50, "Adventure awaits!").setFontSize(50);
+        //this.add.text(50,100, "Click anywhere to begin.").setFontSize(20);
+        let blob = 'Darkness. Nothing but darkness. \nYou feel a sense of falling.\nBefore you hit the ground,\nyou hear a slam.'
+        let introtext = this.add.text(960, 500, blob, { font: 'bold 100px sans-serif'} ).setOrigin(0.5, 0.5);
+        this.add.text(560, 900, "click to wake up.", { font: 'bold 100px sans-serif'} ).setOrigin(0.5, 0.5);
+
         this.input.on('pointerdown', () => {
             this.cameras.main.fade(1000, 0,0,0);
             this.time.delayedCall(1000, () => this.scene.start('demo1'));
