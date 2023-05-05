@@ -13,6 +13,8 @@ class Demo1 extends AdventureScene {
             .on('pointerdown', () => {
                 
                 this.showMessage("The desk flies open, not much but some mold and...");
+
+
                 this.tweens.add({
                     targets: clip,
                     y: '+=' + this.s,
@@ -21,6 +23,8 @@ class Demo1 extends AdventureScene {
                     ease: 'Sine.inOut',
                     duration: 80
                 });
+
+
                 let lockpick = this.add.text(this.w*0.6, this.w*0.4,"lockpick")
                     .setFontSize(this.s*2)
             //.setAlpha([0])
@@ -106,32 +110,120 @@ class Demo1 extends AdventureScene {
 
 class Demo2 extends AdventureScene {
     constructor() {
-        super("demo2", "The second room has a long name (it truly does).");
+        super("demo2", "HALLWAY");
     }
     onEnter() {
-        this.add.text(this.w * 0.3, this.w * 0.4, "just go back")
+        let door =this.add.text(this.w * 0.2, this.w * 0.5, "𝒞𝐿𝒜𝒮𝒮𝑅𝒪𝒪𝑀 𝒟𝒪𝒪𝑅", {color: "#bb6d03"})
             .setFontSize(this.s * 2)
             .setInteractive()
             .on('pointerover', () => {
-                this.showMessage("You've got no other choice, really.");
+                this.showMessage("I could go back to sleep...");
+                this.tweens.add({
+                    targets: door,
+                    x: "+=" + this.s,
+                    yoyo: true,
+                    ease: 'Sine.inOut',
+                    duration: 300
+                })
             })
             .on('pointerdown', () => {
                 this.gotoScene('demo1');
             });
 
-        let finish = this.add.text(this.w * 0.6, this.w * 0.2, '(finish the game)')
+        
+        let clip = this.add.text(this.w * 0.1, this.w * 0.1, "LOCKER\nLOCKER\nLOCKER\nLOCKER\nLOCKER\nLOCKER\nLOCKER\nLOCKER\nLOCKER\nLOCKER\nLOCKER\nLOCKER\nLOCKER\nLOCKER\nLOCKER\nLOCKER", {color:"#ff2727" })
+            .setFontSize(this.s*2.5)
             .setInteractive()
-            .on('pointerover', () => {
-                this.showMessage('*giggles*');
+            .on('pointerover', () => this.showMessage("They're covered in blood...But you notice something inside."))
+            .on('pointerdown', () => {
+                
+                this.showMessage("The inside is suprisingly clean, aside from the dead roach.");
+
+
                 this.tweens.add({
-                    targets: finish,
-                    x: this.s + (this.h - 2 * this.s) * Math.random(),
-                    y: this.s + (this.h - 2 * this.s) * Math.random(),
-                    ease: 'Sine.inOut',
-                    duration: 500
+                    targets: clip,
+                    x: '+=' + this.s,
+                    repeat: 0,
+                    yoyo: true,
+                    ease: 'Bounce.inOut',
+                    duration: 800
                 });
+
+
+                let scrap = this.add.text(this.w*0.2, this.w*0.2,"𝓢𝓒𝓡𝓐𝓟", {color: "#b8fffc"})
+                    .setFontSize(this.s*2)
+            //.setAlpha([0])
+                    .setInteractive()
+                    .on('pointerover',() => 
+                    {
+                //console.log(lockpick._alpha);
+                        this.showMessage("'REALITY IS RELATIVE'...alright?")
+
+
+                    })
+                    .on('pointerdown',() =>{
+                        this.gainItem('scrap')
+                        this.showMessage("Never was crazy about poetry...")
+                        this.tweens.add({
+                            targets: scrap,
+                            alpha:{from: 1, to: 0},
+                            duration: 500,
+                            onComplete: () => scrap.destroy()
+                        })
+
+                    
+                    });
+                    
+                    
+
+                //lockpick.setAlpha([1]);;
+            });
+            let bathroom = this.add.text(this.w * 0.6, this.w * 0.05, "BATHROOM", {color:"#c2bbb1" })
+            .setFontSize(this.s*2)
+            .setInteractive()
+            .on('pointerover', () =>
+            {
+                this.showMessage("Checking my hair couldn't hurt.")
+
+
             })
-            .on('pointerdown', () => this.gotoScene('outro'));
+            .on('pointerdown', () =>{
+                this.gotoScene('bath')
+            })
+            let caf = this.add.text(this.w * 0.3, this.w * 0.05, "CAFETERIA", {color:"#6361ff" })
+            .setFontSize(this.s*2)
+            .setInteractive()
+            .on('pointerover', () =>
+            {
+                this.showMessage("There's an odd smell coming from here...")
+                this.tweens.add({
+                    targets:caf,
+                    y: "+=" + this.s,
+                    repeat: 0,
+                    yoyo: true,
+                    ease: 'Quintic.inOut',
+                    duration: 800
+                })
+
+
+            })
+            .on('pointerdown', () =>{
+                this.gotoScene('caf')
+            })
+
+        // let finish = this.add.text(this.w * 0.6, this.w * 0.2, '(finish the game)')
+        //     .setInteractive()
+        //     .on('pointerover', () => {
+        //         this.showMessage('*giggles*');
+        //         this.tweens.add({
+        //             targets: finish,
+        //             x: this.s + (this.h - 2 * this.s) * Math.random(),
+        //             y: this.s + (this.h - 2 * this.s) * Math.random(),
+        //             ease: 'Sine.inOut',
+        //             duration: 500
+        //         });
+        //     })
+        //     .on('pointerdown', () => this.gotoScene('outro'));
     }
 }
 
@@ -198,7 +290,7 @@ const game = new Phaser.Game({
         height: 1080
     },
     //scene: [Intro, Demo1, Demo2, Outro],
-    scene: [Demo1,TRANS1,Demo2],
+    scene: [Demo2],
     title: "Adventure Game",
     font: 'sans-serif'
 });
