@@ -1,16 +1,18 @@
 class Demo1 extends AdventureScene {
     constructor() {
-        super("demo1", "First Room");
+        super("demo1", "CLASSROOM 1-F");
     }
 
     onEnter() {
-        let detr = 0
-        let clip = this.add.text(this.w * 0.3, this.w * 0.3, "dĔšĸ")
+        this.cameras.main.setBackgroundColor('#830000');
+        this.showMessage("Everything is fuzzy.....");
+        let clip = this.add.text(this.w * 0.6, this.w * 0.3, "dĔšĸ")
             .setFontSize(this.s * 5)
             .setInteractive()
-            .on('pointerover', () => this.showMessage("remember clippy? i do."))
+            .on('pointerover', () => this.showMessage("It's all scratched up, like someone tried to open it."))
             .on('pointerdown', () => {
-                this.showMessage("No touching!");
+                
+                this.showMessage("The desk flies open, not much but some mold and...");
                 this.tweens.add({
                     targets: clip,
                     y: '+=' + this.s,
@@ -19,58 +21,82 @@ class Demo1 extends AdventureScene {
                     ease: 'Sine.inOut',
                     duration: 80
                 });
-                lockpick.setAlpha([1]);
-                detr += 1;
+                let lockpick = this.add.text(this.w*0.6, this.w*0.4,"lockpick")
+                    .setFontSize(this.s*2)
+            //.setAlpha([0])
+                    .setInteractive()
+                    .on('pointerover',() => 
+                    {
+                //console.log(lockpick._alpha);
+                        this.showMessage("It looks used, but should get the job done.")
+
+
+                    })
+                    .on('pointerdown',() =>{
+                        this.gainItem('Lockpick')
+                        this.showMessage("Seems useful enough...")
+                        this.tweens.add({
+                            targets: lockpick,
+                            alpha:{from: 1, to: 0},
+                            duration: 500,
+                            onComplete: () => lockpick.destroy()
+                        })
+
+                    
+                    });
+                    
+                    
+
+                //lockpick.setAlpha([1]);;
             });
-        let lockpick = this.add.text(this.w*0.3, this.w*0.4,"lockpick")
-            .setFontSize(this.s*5)
-            .setAlpha([0])
+        let symbol = this.add.text(this.w * 0.1, this.w * 0.1, "s͓̽y͓̽m͓̽b͓̽o͓̽l͓̽")
+            .setFontSize(this.s * 1)
             .setInteractive()
-            .on('pointerover',() => {
-                console.log(lockpick._alpha);
-                if (lockpick._alpha == 0)
-                {
-                    this.showMessage("nothing");
-                }
-                else{
-                    this.showMessage("you found it.");
-                }
+            .on('pointerover', () => this.showMessage("It's written in blood...and sharpie??? Looks like some kind of prayer circle."))
 
-            });
+        // let key = this.add.text(this.w * 0.5, this.w * 0.1, "🔑 key")
+        //     .setFontSize(this.s * 2)
+        //     .setInteractive()
+        //     .on('pointerover', () => {
+        //         this.showMessage("It's a nice key.")
+        //     })
+        //     .on('pointerdown', () => {
+        //         this.showMessage("You pick up the key.");
+        //         this.gainItem('key');
+        //         this.tweens.add({
+        //             targets: key,
+        //             y: `-=${2 * this.s}`,
+        //             alpha: { from: 1, to: 0 },
+        //             duration: 500,
+        //             onComplete: () => key.destroy()
+        //         });
+        //     })SS
 
-        let key = this.add.text(this.w * 0.5, this.w * 0.1, "🔑 key")
-            .setFontSize(this.s * 2)
+        let door = this.add.text(this.w * 0.1, this.w * 0.05, "DOOR")
+            .setFontSize(this.s * 3)
             .setInteractive()
             .on('pointerover', () => {
-                this.showMessage("It's a nice key.")
-            })
-            .on('pointerdown', () => {
-                this.showMessage("You pick up the key.");
-                this.gainItem('key');
-                this.tweens.add({
-                    targets: key,
-                    y: `-=${2 * this.s}`,
-                    alpha: { from: 1, to: 0 },
-                    duration: 500,
-                    onComplete: () => key.destroy()
-                });
-            })
-
-        let door = this.add.text(this.w * 0.1, this.w * 0.15, "🚪 locked door")
-            .setFontSize(this.s * 2)
-            .setInteractive()
-            .on('pointerover', () => {
-                if (this.hasItem("key")) {
-                    this.showMessage("You've got the key for this door.");
+                if (this.hasItem("Lockpick")) {
+                    this.showMessage("Maybe I can jig it...");
                 } else {
-                    this.showMessage("It's locked. Can you find a key?");
+                    this.showMessage("It's locked. Damn.");
                 }
+                this.tweens.add
+                ({
+                    targets:door,
+                    x: '+=' + this.s,
+                    yoyo: true,
+                    ease: 'Sine.inOut',
+                    duration: 300
+
+
+                })
             })
             .on('pointerdown', () => {
-                if (this.hasItem("key")) {
-                    this.loseItem("key");
-                    this.showMessage("*squeak*");
-                    door.setText("🚪 unlocked door");
+                if (this.hasItem("Lockpick")) {
+                    this.loseItem("Lockpick");
+                    this.showMessage("*grunt*");
+                    door.setText("OPEN DOOR");
                     this.gotoScene('demo2');
                 }
             })
@@ -150,7 +176,9 @@ const game = new Phaser.Game({
         width: 1920,
         height: 1080
     },
-    scene: [Intro, Demo1, Demo2, Outro],
+    //scene: [Intro, Demo1, Demo2, Outro],
+    scene: [Demo1],
     title: "Adventure Game",
+    font: 'sans-serif'
 });
 
