@@ -171,10 +171,19 @@ class Demo2 extends AdventureScene {
                             alpha:{from: 1, to: 0},
                             duration: 500,
                             onComplete: () => scrap.destroy()
+                        
                         })
 
                     
                     });
+                    this.tweens.add({
+                        targets:scrap,
+                        x: '+=' + this.s,
+                        repeat: 0,
+                        yoyo: true,
+                        ease: 'Sin.in',
+                        duration: 200
+                    })
                     
                     
 
@@ -200,7 +209,7 @@ class Demo2 extends AdventureScene {
                 this.showMessage("There's an odd smell coming from here...")
                 this.tweens.add({
                     targets:caf,
-                    y: "+=" + this.s,
+                    x: "+=" + this.s,
                     repeat: 0,
                     yoyo: true,
                     ease: 'Quintic.inOut',
@@ -226,6 +235,71 @@ class Demo2 extends AdventureScene {
         //         });
         //     })
         //     .on('pointerdown', () => this.gotoScene('outro'));
+    }
+}
+class Cafeteria extends AdventureScene 
+{
+    constructor() {
+        super("caf", "CAFETERIA");
+    }
+    onEnter() 
+    {
+        this.showMessage("hi")
+    }
+}
+
+
+
+class Bathroom extends AdventureScene {
+    constructor() {
+        super("bath", "BATHROOM");
+    }
+    onEnter() 
+    {
+        this.showMessage("There's something written on the wall...");
+        let door =this.add.text(this.w * 0.35, this.w * 0.3, "MIRROR", {color: "#81fffb"})
+        .setFontSize(this.s*2)
+        .setInteractive()
+        .on('pointerdown', () => {
+            this.cameras.main.setBackgroundColor('#830000');
+            this.showMessage("A spectre shoots from the cracks and beckons for help.")
+            let exit = this.add.text(this.w * 0.1, this.w * 0.5, "GETOUTGETOUTGETOUT", {color:"#ffffff" })
+            .setFontSize(this.s*3)
+            .setInteractive()
+            .on('pointerdown', () => {
+                if (this.hasItem('spectre dust'))
+                {
+                    this.gotoScene('demo2')
+                }
+                else {
+                    this.showMessage('There is an astral lock preventing you from leaving')
+                }
+
+            })
+
+            let mess =this.add.text(this.w * 0.5, this.w * 0.3, "H҉E҉L҉P҉", {color: "#ffffff"})
+            .setFontSize(this.s*5)
+            .setInteractive()
+            .on('pointerover', () => {
+                
+                this.tweens.add({targets: mess,
+                x: this.s + (this.h - 2 * this.s) * Math.random(),
+                y: this.s + (this.h - 2 * this.s) * Math.random()
+                })
+            })
+            .on('pointerdown',() =>{
+                this.showMessage("The spectre fades away but the room does not feel empty.")
+                this.gainItem('spectre dust')
+                this.tweens.add({
+                    targets: mess,
+                    alpha:{from: 1, to: 0},
+                    duration: 500,
+                })
+
+            })
+            
+        })
+
     }
 }
 
@@ -292,7 +366,7 @@ const game = new Phaser.Game({
         height: 1080
     },
     //scene: [Intro, Demo1, Demo2, Outro],
-    scene: [Demo2],
+    scene: [Demo2,Bathroom,Cafeteria],
     title: "Adventure Game",
     font: 'sans-serif'
 });
