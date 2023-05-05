@@ -157,13 +157,15 @@ class Demo2 extends AdventureScene {
                     .on('pointerover',() => 
                     {
                 //console.log(lockpick._alpha);
+                        
                         this.showMessage("'REALITY IS RELATIVE'...alright?")
 
 
                     })
                     .on('pointerdown',() =>{
+                        this.cameras.main.setBackgroundColor('#830000');
                         this.gainItem('scrap')
-                        this.showMessage("Never was crazy about poetry...")
+                        this.showMessage("You hear a giggle in the distance...maybe you should book it")
                         this.tweens.add({
                             targets: scrap,
                             alpha:{from: 1, to: 0},
