@@ -97,7 +97,7 @@ class Demo1 extends AdventureScene {
                     this.loseItem("Lockpick");
                     this.showMessage("*grunt*");
                     door.setText("OPEN DOOR");
-                    this.gotoScene('demo2');
+                    this.gotoScene('trans1');
                 }
             })
 
@@ -156,6 +156,27 @@ class Intro extends Phaser.Scene {
         });
     }
 }
+class TRANS1 extends Phaser.Scene {
+    constructor() {
+        super('trans1')
+    }
+    preload()
+    {
+        
+    }
+    create() {
+        //this.add.text(50,50, "Adventure awaits!").setFontSize(50);
+        //this.add.text(50,100, "Click anywhere to begin.").setFontSize(20);
+        let blob = "Nobody is here, there's a long corridor with\nlockers coating each wall.\nYou spot some papers on the floor.\nIn the distance, a bright blue door."
+        let introtext = this.add.text(960, 500, blob, { font: 'bold 80px sans-serif'} ).setOrigin(0.5, 0.5);
+        this.add.text(560, 900, "click to continue.", { font: 'bold 100px sans-serif'} ).setOrigin(0.5, 0.5);
+
+        this.input.on('pointerdown', () => {
+            this.cameras.main.fade(1000, 0,0,0);
+            this.time.delayedCall(1000, () => this.scene.start('demo2'));
+        });
+    }
+}
 
 class Outro extends Phaser.Scene {
     constructor() {
@@ -177,7 +198,7 @@ const game = new Phaser.Game({
         height: 1080
     },
     //scene: [Intro, Demo1, Demo2, Outro],
-    scene: [Demo1],
+    scene: [Demo1,TRANS1,Demo2],
     title: "Adventure Game",
     font: 'sans-serif'
 });
