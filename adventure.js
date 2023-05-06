@@ -147,4 +147,43 @@ class AdventureScene extends Phaser.Scene {
     onEnter() {
         console.warn('This AdventureScene did not implement onEnter():', this.constructor.name);
     }
+    simpleslide(targ,direc,speed)
+    {
+        // this.tweens.add({
+        //     targets: targ,
+        //     x: "+=" + this.s,
+        //     yoyo: true,
+        //     ease: 'Sine.inOut',
+        //     duration: 500
+
+        // })
+        if (direc == "x"){
+            this.tweens.add({
+                targets: targ,
+                x: "+=" + this.s,
+                yoyo: true,
+                ease: 'Sine.inOut',
+                duration: speed
+            })
+        }
+        else if (direc == "y"){
+            this.tweens.add({
+                targets: targ,
+                y: "+=" + this.s,
+                yoyo: true,
+                ease: 'Sine.inOut',
+                duration: speed
+            }) 
+        }
+
+    }
+    easyfade(item1,speed){
+        this.tweens.add(
+        {
+            targets: item1,
+            alpha: {from: 1, to: 0},
+            duration: speed,
+            onComplete: () => item1.destroy()
+        })
+    }
 }

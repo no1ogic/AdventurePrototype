@@ -15,14 +15,7 @@ class Demo1 extends AdventureScene {
                 this.showMessage("The desk flies open, not much but some mold and...");
 
 
-                this.tweens.add({
-                    targets: clip,
-                    y: '+=' + this.s,
-                    repeat: 0,
-                    yoyo: true,
-                    ease: 'Sine.inOut',
-                    duration: 80
-                });
+                this.simpleslide(clip,"y","500");
 
 
                 let lockpick = this.add.text(this.w*0.6, this.w*0.4,"lockpick")
@@ -39,43 +32,20 @@ class Demo1 extends AdventureScene {
                     .on('pointerdown',() =>{
                         this.gainItem('Lockpick')
                         this.showMessage("Seems useful enough...")
-                        this.tweens.add({
-                            targets: lockpick,
-                            alpha:{from: 1, to: 0},
-                            duration: 500,
-                            onComplete: () => lockpick.destroy()
-                        })
+                        this.easyfade(lockpick, "500");
 
                     
                     });
                     
                     
 
-                //lockpick.setAlpha([1]);;
             });
         let symbol = this.add.text(this.w * 0.1, this.w * 0.1, "s͓̽y͓̽m͓̽b͓̽o͓̽l͓̽")
             .setFontSize(this.s * 1)
             .setInteractive()
             .on('pointerover', () => this.showMessage("It's written in blood...and sharpie??? Looks like some kind of prayer circle."))
 
-        // let key = this.add.text(this.w * 0.5, this.w * 0.1, "🔑 key")
-        //     .setFontSize(this.s * 2)
-        //     .setInteractive()
-        //     .on('pointerover', () => {
-        //         this.showMessage("It's a nice key.")
-        //     })
-        //     .on('pointerdown', () => {
-        //         this.showMessage("You pick up the key.");
-        //         this.gainItem('key');
-        //         this.tweens.add({
-        //             targets: key,
-        //             y: `-=${2 * this.s}`,
-        //             alpha: { from: 1, to: 0 },
-        //             duration: 500,
-        //             onComplete: () => key.destroy()
-        //         });
-        //     })SS
-
+       
         let door = this.add.text(this.w * 0.1, this.w * 0.05, "DOOR")
             .setFontSize(this.s * 3)
             .setInteractive()
@@ -85,16 +55,7 @@ class Demo1 extends AdventureScene {
                 } else {
                     this.showMessage("It's locked. Damn.");
                 }
-                this.tweens.add
-                ({
-                    targets:door,
-                    x: '+=' + this.s,
-                    yoyo: true,
-                    ease: 'Sine.inOut',
-                    duration: 300
-
-
-                })
+                this.simpleslide(door,"x","300")
             })
             .on('pointerdown', () => {
                 if (this.hasItem("Lockpick")) {
@@ -118,13 +79,7 @@ class Demo2 extends AdventureScene {
             .setInteractive()
             .on('pointerover', () => {
                 this.showMessage("I could go back to sleep...");
-                this.tweens.add({
-                    targets: door,
-                    x: "+=" + this.s,
-                    yoyo: true,
-                    ease: 'Sine.inOut',
-                    duration: 300
-                })
+                this.simpleslide(door, "x", "200");
             })
             .on('pointerdown', () => {
                 this.gotoScene('demo1');
@@ -166,24 +121,10 @@ class Demo2 extends AdventureScene {
                         this.cameras.main.setBackgroundColor('#830000');
                         this.gainItem('scrap')
                         this.showMessage("You hear a giggle in the distance...maybe you should book it")
-                        this.tweens.add({
-                            targets: scrap,
-                            alpha:{from: 1, to: 0},
-                            duration: 500,
-                            onComplete: () => scrap.destroy()
-                        
-                        })
-
+                        this.easyfade(scrap, "800");
                     
                     });
-                    this.tweens.add({
-                        targets:scrap,
-                        x: '+=' + this.s,
-                        repeat: 0,
-                        yoyo: true,
-                        ease: 'Sin.in',
-                        duration: 200
-                    })
+                    this.simpleslide(scrap, "x", "200");
                     
                     
 
@@ -207,14 +148,7 @@ class Demo2 extends AdventureScene {
             .on('pointerover', () =>
             {
                 this.showMessage("There's an odd smell coming from here...")
-                this.tweens.add({
-                    targets:caf,
-                    x: "+=" + this.s,
-                    repeat: 0,
-                    yoyo: true,
-                    ease: 'Quintic.inOut',
-                    duration: 800
-                })
+                this.simpleslide(caf, "x", "300")
 
 
             })
@@ -278,14 +212,7 @@ class Cafeteria extends AdventureScene
         .setInteractive()
         .on('pointerover', () => {
             this.showMessage("I could go check my hair again...")
-            this.tweens.add({
-                targets: back,
-                x: "+=" + this.s,
-                repeat: 0,
-                yoyo: true,
-                ease: 'Quintic.inOut',
-                duration: 800
-            })
+            this.simpleslide(back, "x", "200")
         })
         .on('pointerdown', () =>{
             this.gotoScene('demo2')
@@ -295,14 +222,7 @@ class Cafeteria extends AdventureScene
         .setInteractive()
         .on('pointerover', () =>{
             this.showMessage("Maybe there's an exit through the back..")
-            this.tweens.add({
-                targets: kitchen,
-                x: "+=" + this.s,
-                repeat: 0,
-                yoyo: true,
-                ease: 'Quintic.inOut',
-                duration: 800
-            })
+            this.simpleslide(kitchen, "x", "300")
         })
         .on('pointerdown', () =>{
             
@@ -328,14 +248,7 @@ class Kitchen extends AdventureScene
         .on('pointerover', () =>{
 
             this.showMessage("There's usually a vent or something in walk-ins")
-            this.tweens.add({
-                targets: closet,
-                x: "+=" + this.s,
-                repeat: 0,
-                yoyo: true,
-                ease: "Quintic.inOut",
-                duration: 800
-            })
+            this.simpleslide(closet, "x", "500")
         })
         .on('pointerdown', () => {
             this.gotoScene('closet')
@@ -346,14 +259,7 @@ class Kitchen extends AdventureScene
         .on('pointerover', () =>{
 
             this.showMessage("Maybe the body can keep me company...")
-            this.tweens.add({
-                targets: cafte,
-                x: "+=" + this.s,
-                repeat: 0,
-                yoyo: true,
-                ease: "Quintic.inOut",
-                duration: 800
-            })
+            this.simpleslide(cafte, "x", "200")
         })
         .on('pointerdown', () => {
             this.gotoScene('caf')
@@ -383,16 +289,7 @@ class Kitchen extends AdventureScene
         .on('pointerdown', () => {
             this.showMessage("It reaks. The juices soak your pocket.")
             this.gainItem('Old Meat')
-            this.tweens.add(
-            {
-                targets: meat,
-                alpha:{from: 1, to: 0},
-                duration: 500,
-                onComplete: () => meat.destroy()
-
-
-
-            })
+            this.easyfade(meat,"200");
         
 
 
@@ -429,7 +326,7 @@ class Closet extends AdventureScene
         .setFontSize(this.s*3)
         .setInteractive()
         .on('pointerover', () => {
-            this.showMessage("There's some kind of lock on it...")
+            this.showMessage("It is unlocked...")
         })
         .on('pointerdown', () => {
             if (this.hasItem('Old Meat')){
@@ -614,7 +511,22 @@ class Outro extends Phaser.Scene {
         this.input.on('pointerdown', () => this.scene.start('intro'));
     }
 }
-
+class test extends AdventureScene {
+    constructor() {
+        super("test", "test");
+    }
+    onEnter() 
+    {
+        this.showMessage("hi")
+        let clip = this.add.text(this.w * 0.3, this.w * 0.2, "dĔšĸ")
+        .setFontSize(this.s*5)
+        .setInteractive()
+        .on('pointerover', () => {
+            //this.showMessage("hdddi")
+            this.simpleslide(clip,"x");
+        })
+    }
+}
 
 const game = new Phaser.Game({
     scale: {
@@ -624,8 +536,9 @@ const game = new Phaser.Game({
         height: 1080
     },
     //scene: [Intro, Demo1, Demo2, Outro],
-    //scene: [Intro,Demo1,TRANS1,Demo2,Bathroom,Cafeteria,TRANS2,Kitchen,Closet,ENDING1,ENDING2],
-    scene: [Kitchen,Closet,ENDING1,ENDING2],
+    scene: [Intro,Demo1,TRANS1,Demo2,Bathroom,Cafeteria,TRANS2,Kitchen,Closet,ENDING1,ENDING2],
+    //scene: [Kitchen,Closet,ENDING1,ENDING2],
+    //scene:[],
     title: "Adventure Game",
     font: 'sans-serif'
 });
