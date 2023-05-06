@@ -306,7 +306,7 @@ class Cafeteria extends AdventureScene
         })
         .on('pointerdown', () =>{
             
-            this.gotoScene('trans2')
+            this.gotoScene('kitsch')
         })
 
 
@@ -414,8 +414,7 @@ class Closet extends AdventureScene
             this.showMessage("It's a bunch of stacked boxes...")
         })
         .on("pointerdown", () => {
-            this.gainItem("Crowbar")
-            this.showMessage("Convenient...")
+            this.showMessage("They're empty???")
             this.tweens.add({
                 targets: shelf,
                 x: "+=" + this.s,
@@ -433,12 +432,13 @@ class Closet extends AdventureScene
             this.showMessage("There's some kind of lock on it...")
         })
         .on('pointerdown', () => {
-            if (this.hasItem('Crowbar')){
+            if (this.hasItem('Old Meat')){
                 this.showMessage("*CRACK*")
-                this.gotoScene("ending1")
+                this.gotoScene("ending2")
             }
+            
             else{
-                this.showMessage("There's a small slit I can jam it with.")
+                this.gotoScene("ending1")
             }
 
         })
@@ -449,7 +449,7 @@ class Closet extends AdventureScene
 
 
 }
-class ENDING extends Phaser.Scene {
+class ENDING1 extends Phaser.Scene {
     constructor() {
         super('ending1')
     }
@@ -468,6 +468,23 @@ class ENDING extends Phaser.Scene {
             this.cameras.main.fade(1000, 0,0,0);
             this.time.delayedCall(1000, () => this.scene.start('demo1'));
         });
+    }
+}
+class ENDING2 extends Phaser.Scene {
+    constructor() {
+        super('ending2')
+    }
+    preload()
+    {
+        
+    }
+    create() {
+        //this.add.text(50,50, "Adventure awaits!").setFontSize(50);
+        //this.add.text(50,100, "Click anywhere to begin.").setFontSize(20);
+        let blob = "You jump out the window. ALAS!\nThe gross meat in your pocket was so pungent\n it broke the time loop!\n You wake up in a denny's dumpster\n#allgirlstriptomiami"
+        let introtext = this.add.text(960, 500, blob, { font: 'bold 60px sans-serif'} ).setOrigin(0.5, 0.5);
+        this.add.text(560, 900, "GAME END.", { font: 'bold 100px sans-serif'} ).setOrigin(0.5, 0.5);
+
     }
 }
 
@@ -607,7 +624,8 @@ const game = new Phaser.Game({
         height: 1080
     },
     //scene: [Intro, Demo1, Demo2, Outro],
-    scene: [Closet,ENDING,Demo1],
+    //scene: [Intro,Demo1,TRANS1,Demo2,Bathroom,Cafeteria,TRANS2,Kitchen,Closet,ENDING1,ENDING2],
+    scene: [Kitchen,Closet,ENDING1,ENDING2],
     title: "Adventure Game",
     font: 'sans-serif'
 });
