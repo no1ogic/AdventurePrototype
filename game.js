@@ -244,11 +244,232 @@ class Cafeteria extends AdventureScene
     }
     onEnter() 
     {
-        this.showMessage("hi")
+        this.cameras.main.setBackgroundColor('#77adc6');
+        let body = this.add.text(this.w * 0.6, this.w * 0.1, "DEAD BODY\nDEAD BODY\nDEAD BODY\nDEAD BODY\nDEAD BODY\nDEAD BODY\nDEAD BODY\nDEAD BODY\nDEAD BODY\nDEAD BODY\nDEAD BODY\nDEAD BODY\nDEAD BODY\nDEAD BODY", {color:"#ff2727" })
+        .setFontSize(this.s*2)
+        .setInteractive()
+        .on('pointerover', () => {
+            this.showMessage('The body is lying face down, it looks familiar...')
+
+
+        })
+        .on('pointerdown',()=> {
+            this.tweens.add({
+                targets: body,
+                x: '+=' + this.s,
+                repeat: 0,
+                yoyo: true,
+                ease: 'Bounce.inOut',
+                duration: 300
+            })
+            this.showMessage("You check the ID and it's yours...")
+            this.gainItem("ID")
+
+
+        })
+        let phone = this.add.text(this.w * 0.1, this.w * 0.2, "📱", {color:"#ff2727" })
+        .setFontSize(this.s*2)
+        .setInteractive()
+        .on('pointerover', () => {
+            this.showMessage("A text on the screen says: He never survived the crash...")
+        })
+        let back = this.add.text(this.w * 0.1, this.w * 0.5, "HALLWAY", {color:"#FFFFF" })
+        .setFontSize(this.s*2)
+        .setInteractive()
+        .on('pointerover', () => {
+            this.showMessage("I could go check my hair again...")
+            this.tweens.add({
+                targets: back,
+                x: "+=" + this.s,
+                repeat: 0,
+                yoyo: true,
+                ease: 'Quintic.inOut',
+                duration: 800
+            })
+        })
+        .on('pointerdown', () =>{
+            this.gotoScene('demo2')
+        })
+        let kitchen = this.add.text(this.w * 0.3, this.w * 0.02, "--KITCHEN--", {color:"#acff9b" })
+        .setFontSize(this.s*2)
+        .setInteractive()
+        .on('pointerover', () =>{
+            this.showMessage("Maybe there's an exit through the back..")
+            this.tweens.add({
+                targets: kitchen,
+                x: "+=" + this.s,
+                repeat: 0,
+                yoyo: true,
+                ease: 'Quintic.inOut',
+                duration: 800
+            })
+        })
+        .on('pointerdown', () =>{
+            
+            this.gotoScene('trans2')
+        })
+
+
     }
 }
 
+class Kitchen extends AdventureScene 
+{
+    constructor() {
+        super("kitsch", "KITCHEN");
+    }
+    onEnter() 
+    {
+        this.cameras.main.setBackgroundColor('#c9c9c9');
 
+        let closet =this.add.text(this.w * 0.3, this.w * 0.1, "CLOSET", {color: "#FFFFF"})
+        .setFontSize(this.s*3)
+        .setInteractive()
+        .on('pointerover', () =>{
+
+            this.showMessage("There's usually a vent or something in walk-ins")
+            this.tweens.add({
+                targets: closet,
+                x: "+=" + this.s,
+                repeat: 0,
+                yoyo: true,
+                ease: "Quintic.inOut",
+                duration: 800
+            })
+        })
+        .on('pointerdown', () => {
+            this.gotoScene('closet')
+        })
+        let cafte =this.add.text(this.w * 0.3, this.w * 0.5, "CAFETERIA", {color: "#FFFFF"})
+        .setFontSize(this.s*3)
+        .setInteractive()
+        .on('pointerover', () =>{
+
+            this.showMessage("Maybe the body can keep me company...")
+            this.tweens.add({
+                targets: cafte,
+                x: "+=" + this.s,
+                repeat: 0,
+                yoyo: true,
+                ease: "Quintic.inOut",
+                duration: 800
+            })
+        })
+        .on('pointerdown', () => {
+            this.gotoScene('caf')
+        })
+        
+        let note = this.add.text(this.w * 0.3, this.w *0.2, "📰")
+        .setFontSize(this.s*3)
+        .setInteractive()
+        .on('pointerover', () => {
+            this.showMessage("Jan. 18th xxxx, man found dead in school. Suspected accident but foul play not ruled out.")
+        })
+
+
+
+
+
+        this.showMessage("I guess we know where the smell came from.")
+        let meat =this.add.text(this.w * 0.1, this.w * 0.3, "OLD MEAT", {color: "#fe7f47"})
+        .setFontSize(this.s*2)
+        .setInteractive()
+        .on('pointerover', () => {
+            this.showMessage('It is soggy to the touch.')
+
+
+
+        })
+        .on('pointerdown', () => {
+            this.showMessage("It reaks. The juices soak your pocket.")
+            this.gainItem('Old Meat')
+            this.tweens.add(
+            {
+                targets: meat,
+                alpha:{from: 1, to: 0},
+                duration: 500,
+                onComplete: () => meat.destroy()
+
+
+
+            })
+        
+
+
+
+    })
+    }
+}
+class Closet extends AdventureScene 
+{
+    constructor() {
+        super("closet", "CLOSET");
+    }
+    onEnter() 
+    {
+        let shelf = this.add.text(this.w*0.1, this.w*0.1, "📦📦\n📦📦\n📦📦\n📦📦\n📦📦\n📦📦\n📦📦\n📦📦\n📦📦\n📦📦\n📦📦")
+        .setFontSize(this.s*3)
+        .setInteractive()
+        .on('pointerover', () => {
+            this.showMessage("It's a bunch of stacked boxes...")
+        })
+        .on("pointerdown", () => {
+            this.gainItem("Crowbar")
+            this.showMessage("Convenient...")
+            this.tweens.add({
+                targets: shelf,
+                x: "+=" + this.s,
+                repeat: 0,
+                yoyo: true,
+                ease: "Bounce.inOut",
+                duration: 800
+
+            })
+        })
+        let window = this.add.text(this.w * 0.3, this.w * 0.1, "⏹⏹\n⏹⏹")
+        .setFontSize(this.s*3)
+        .setInteractive()
+        .on('pointerover', () => {
+            this.showMessage("There's some kind of lock on it...")
+        })
+        .on('pointerdown', () => {
+            if (this.hasItem('Crowbar')){
+                this.showMessage("*CRACK*")
+                this.gotoScene("ending1")
+            }
+            else{
+                this.showMessage("There's a small slit I can jam it with.")
+            }
+
+        })
+
+        
+
+    }
+
+
+}
+class ENDING extends Phaser.Scene {
+    constructor() {
+        super('ending1')
+    }
+    preload()
+    {
+        
+    }
+    create() {
+        //this.add.text(50,50, "Adventure awaits!").setFontSize(50);
+        //this.add.text(50,100, "Click anywhere to begin.").setFontSize(20);
+        let blob = "As you jump through the window, you begin to fall.\nForever. Darkness consumes you once again\nDoomed to repeat."
+        let introtext = this.add.text(960, 500, blob, { font: 'bold 60px sans-serif'} ).setOrigin(0.5, 0.5);
+        this.add.text(560, 900, "click to continue.", { font: 'bold 100px sans-serif'} ).setOrigin(0.5, 0.5);
+
+        this.input.on('pointerdown', () => {
+            this.cameras.main.fade(1000, 0,0,0);
+            this.time.delayedCall(1000, () => this.scene.start('demo1'));
+        });
+    }
+}
 
 class Bathroom extends AdventureScene {
     constructor() {
@@ -345,7 +566,27 @@ class TRANS1 extends Phaser.Scene {
         });
     }
 }
+class TRANS2 extends Phaser.Scene {
+    constructor() {
+        super('trans2')
+    }
+    preload()
+    {
+        
+    }
+    create() {
+        //this.add.text(50,50, "Adventure awaits!").setFontSize(50);
+        //this.add.text(50,100, "Click anywhere to begin.").setFontSize(20);
+        let blob = "The kitchen is rather clean considering the dead body outside.\nIt reaks though."
+        let introtext = this.add.text(960, 500, blob, { font: 'bold 60px sans-serif'} ).setOrigin(0.5, 0.5);
+        this.add.text(560, 900, "click to continue.", { font: 'bold 100px sans-serif'} ).setOrigin(0.5, 0.5);
 
+        this.input.on('pointerdown', () => {
+            this.cameras.main.fade(1000, 0,0,0);
+            this.time.delayedCall(1000, () => this.scene.start('kitsch'));
+        });
+    }
+}
 class Outro extends Phaser.Scene {
     constructor() {
         super('outro');
@@ -366,7 +607,7 @@ const game = new Phaser.Game({
         height: 1080
     },
     //scene: [Intro, Demo1, Demo2, Outro],
-    scene: [Demo2,Bathroom,Cafeteria],
+    scene: [Closet,ENDING,Demo1],
     title: "Adventure Game",
     font: 'sans-serif'
 });
