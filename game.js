@@ -1,6 +1,6 @@
-class Demo1 extends AdventureScene {
+class CLASSROOM extends AdventureScene {
     constructor() {
-        super("demo1", "CLASSROOM 1-F");
+        super("CLASSROOM", "CLASSROOM 1-F");
     }
 
     onEnter() {
@@ -69,9 +69,9 @@ class Demo1 extends AdventureScene {
     }
 }
 
-class Demo2 extends AdventureScene {
+class HALL extends AdventureScene {
     constructor() {
-        super("demo2", "HALLWAY");
+        super("HALL", "HALLWAY");
     }
     onEnter() {
         let door =this.add.text(this.w * 0.2, this.w * 0.5, "𝒞𝐿𝒜𝒮𝒮𝑅𝒪𝒪𝑀 𝒟𝒪𝒪𝑅", {color: "#bb6d03"})
@@ -455,7 +455,7 @@ class Intro extends Phaser.Scene {
 
         this.input.on('pointerdown', () => {
             this.cameras.main.fade(1000, 0,0,0);
-            this.time.delayedCall(1000, () => this.scene.start('demo1'));
+            this.time.delayedCall(1000, () => this.scene.start('CLASSROOM'));
         });
     }
 }
@@ -476,7 +476,7 @@ class TRANS1 extends Phaser.Scene {
 
         this.input.on('pointerdown', () => {
             this.cameras.main.fade(1000, 0,0,0);
-            this.time.delayedCall(1000, () => this.scene.start('demo2'));
+            this.time.delayedCall(1000, () => this.scene.start('HALL'));
         });
     }
 }
@@ -535,11 +535,10 @@ const game = new Phaser.Game({
         width: 1920,
         height: 1080
     },
-    //scene: [Intro, Demo1, Demo2, Outro],
-    scene: [Intro,Demo1,TRANS1,Demo2,Bathroom,Cafeteria,TRANS2,Kitchen,Closet,ENDING1,ENDING2],
-    //scene: [Kitchen,Closet,ENDING1,ENDING2],
-    //scene:[],
-    title: "Adventure Game",
+
+    scene: [Intro,CLASSROOM,TRANS1,HALL,Bathroom,Cafeteria,TRANS2,Kitchen,Closet,ENDING1,ENDING2],
+
+    title: "abyss",
     font: 'sans-serif'
 });
 
