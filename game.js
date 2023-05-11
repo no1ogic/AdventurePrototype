@@ -404,7 +404,7 @@ class Bathroom extends AdventureScene {
             .on('pointerdown', () => {
                 if (this.hasItem('spectre dust'))
                 {
-                    this.gotoScene('demo2')
+                    this.gotoScene('HALL')
                 }
                 else {
                     this.showMessage('There is an astral lock preventing you from leaving')
